@@ -1,0 +1,18 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=data
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
+
+  cloud-service:
+    build:
+      context: ./
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/data
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
